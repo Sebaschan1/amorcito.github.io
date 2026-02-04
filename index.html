@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un regalo para ti &#10084;&#65039;</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-sobre: #ff80ab;
+            --color-sobre-oscuro: #f06292;
+            --color-carta: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Contenedor del sobre */
+        .envelope-wrapper {
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: var(--color-sobre-oscuro);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        /* La solapa del sobre */
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 4;
+            border-top: 130px solid var(--color-sobre);
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* El cuerpo interno del sobre */
+        .envelope::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 3;
+            border-top: 130px solid transparent;
+            border-left: 150px solid var(--color-sobre-oscuro);
+            border-right: 150px solid var(--color-sobre-oscuro);
+            border-bottom: 100px solid var(--color-sobre-oscuro);
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* La carta dentro del sobre */
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            height: 180px;
+            background: var(--color-carta);
+            z-index: 2;
+            transition: transform 0.5s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .letter p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #d81b60;
+        }
+
+        /* Animación cuando se abre */
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .letter {
+            transform: translate(-50%, -100px);
+        }
+
+        /* Corazones flotantes del código anterior */
+        .heart {
+            position: absolute;
+            color: #ff80ab;
+            font-size: 20px;
+            user-select: none;
+            animation: move linear infinite;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope-wrapper" onclick="abrirCarta()">
+        <div class="letter">
+            <p>Feliz 14 de Febrero</p>
+            <p>&#10084;&#65039;</p>
+        </div>
+        <div class="envelope"></div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '&#10084;&#65039;'; 
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        function abrirCarta() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            wrapper.classList.add('open');
+            
+            // Esperamos 2 segundos para que vea la animación y redirigimos
+            setTimeout(() => {
+                window.location.href = "inicio.html";
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
